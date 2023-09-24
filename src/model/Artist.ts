@@ -15,6 +15,7 @@ export class Artist {
     }
   }
 
+  public id?: string
   public artistName?: string
   public yearBorn?: string
   public yearDied?: string

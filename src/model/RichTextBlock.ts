@@ -5,7 +5,7 @@ import { type ContentfulData } from './types';
 const options = {
   renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: ({ data: { target: { fields }}}) =>
-          `<img src="${fields.file.url}" height="${fields.file.details.image.height}" width="${fields.file.details.image.width}" alt="${fields.description}"/>`,
+          `<img src="${fields.file.url}" class="embedded_image" width="300" alt="${fields.description}"/>`,
   },
 };
 

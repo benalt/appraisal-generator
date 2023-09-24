@@ -3,6 +3,7 @@ import { Appraisal } from '@/model/Appraisal'
 import { computed, reactive } from 'vue';
 import AppraisalPage from './AppraisalPage.vue';
 import ArtworkEntry from './ArtworkEntry.vue';
+import AppraisalSummary from './AppraisalSummary.vue';
 
 const appraisal = reactive( await Appraisal.loadAppraisal() )
 
@@ -46,20 +47,14 @@ function lineBreaks(input?:string):string {
       <div v-html="precedingPage.details?.html" />
     </AppraisalPage>
     <AppraisalPage class="appraisalSummaryPage">
-      <h1 id="appraisal-summary">Appraisal Summary</h1>
-      Total Replacement Value: 
-      <span v-html="appraisal.appraisedValueHtml"></span>
-      <ol>
-        <li v-for="appraisedArtwork in appraisal.appraisedArtworks" :key="`appraisedArtwork-summary${appraisedArtwork.id}`">
-          <span v-html="appraisedArtwork.labelHtml" />
-          <span>{{ appraisedArtwork.appraisedValue }}</span>
-        </li>
-      </ol>
+      <AppraisalSummary :appraisal="appraisal" />
     </AppraisalPage>
-    <AppraisalPage class="appraisedArtworks">
-      <h1 id="appraised-items">Appraised Items</h1>
-      <ArtworkEntry v-for="(appraisedArtwork, idx) in appraisal.appraisedArtworks" :position="idx+1" :artwork="appraisedArtwork" :key="`appraisedArtwork-${appraisedArtwork.id}`" />
+    
+    <AppraisalPage v-for="(appraisedArtwork, idx) in appraisal.appraisedArtworks" :key="`appraisedArtwork-${appraisedArtwork.id}`" class="appraisedArtworks">
+      <h1 v-if="idx === 0" id="appraised-items">Appraised Items</h1>
+      <ArtworkEntry :position="idx+1" :artwork="appraisedArtwork"  />
     </AppraisalPage>
+    
     <AppraisalPage v-for="(followingPage) in appraisal.followingSections" :key="`following-page-${followingPage.id}`">
       <h1 id="`following-${idx}`">{{ followingPage.sectionTitle }}</h1>
       <div v-html="followingPage.details?.html" />
@@ -69,14 +64,10 @@ function lineBreaks(input?:string):string {
 
 <style scoped>
 
-
-
 .headline {
   display: block;
 }
 
-hr {
-  page-break-before: always;
-}
+
 
 </style>

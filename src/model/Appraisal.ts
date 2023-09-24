@@ -2,7 +2,6 @@ import { Artwork } from "./Artwork"
 import { DocumentSection } from "./DocumentSection"
 
 import * as contentful from 'contentful'
-import apiConfig from './apiConfig'
 import { type ContentfulData } from "./types";
 
 const client = contentful.createClient({

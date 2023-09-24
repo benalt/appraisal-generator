@@ -50,16 +50,20 @@ onMounted(() => {
 
 .page {
   width: auto;
-  min-height: 9.75in;
   page-break-after: always;
   margin: 0 auto;
 }
 
 .titlePage .page {
+  min-height: 9.75in;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
+}
+
+.embedded_image {
+  max-width: 3in
 }
 
 </style>

@@ -1,5 +1,6 @@
 html {
   font-family: 'Open Sans', sans-serif;
+  font-size: 11pt;
 }
 
 /*
@@ -48,4 +49,10 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
 */
 #root, #__next {
   isolation: isolate;
+}
+
+hr {
+  border: 0;
+  margin: 0;
+  page-break-before: always;
 }
