@@ -4,10 +4,11 @@ import { DocumentSection } from "./DocumentSection"
 import * as contentful from 'contentful'
 import { type ContentfulData } from "./types";
 
+import apiConfig from "@/apiConfig";
+
 const client = contentful.createClient({
   ...apiConfig
 });
-
 
 export class Appraisal {
   constructor (contentfulData:ContentfulData) {

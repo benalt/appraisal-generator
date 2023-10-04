@@ -60,7 +60,7 @@ defineProps<{
 
       <div class="details">
         <h3>{{ supportingArtwork.title }}</h3>
-        <div v-html="supportingArtwork.details.html" />
+        <div v-html="supportingArtwork.details?.html" />
       </div>
       
       <div class="image supportingImage">

@@ -53,6 +53,7 @@ export class Artwork {
 
       if ( [ "provenance", "exhibited",
             "literature", "description" ].includes(key) ) {
+        // @ts-ignore
         this[key] = new RichTextBlock( contentfulData.fields[key] as ContentfulData)
       }        
       

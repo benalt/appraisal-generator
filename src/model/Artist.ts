@@ -27,6 +27,7 @@ export class Artist {
     if (this.yearBorn && this.yearDied) { return `${this.yearBorn}-${this.yearDied}` }
     if (this.yearBorn && !this.yearDied) { return `born ${this.yearBorn}` }
     if (!this.yearBorn && this.yearDied) { return `died ${this.yearBorn}` }
+    return null
   }
 
   get labelHtml():string {

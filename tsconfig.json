@@ -1,5 +1,8 @@
 {
   "files": [],
+  "compilerOptions": {
+    "types": ["vite/client"]
+  },
   "references": [
     {
       "path": "./tsconfig.node.json"
@@ -9,9 +12,6 @@
     },
     {
       "path": "./tsconfig.vitest.json"
-    },
-    {
-      "path": "../model/tsconfig.model.json"
-    },
+    }
   ]
 }
