@@ -5,8 +5,8 @@ import { type ContentfulData } from "./types"
 
 class ImageAsset {
   constructor (contentfulData:ContentfulData) {
-    this.url = contentfulData.fields.file.url
-    this.title = contentfulData.fields.title
+    this.url = contentfulData.fields?.file?.url
+    this.title = contentfulData.fields?.title
   }
   url?:string 
   title?:string
