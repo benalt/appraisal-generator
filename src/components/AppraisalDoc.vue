@@ -4,8 +4,13 @@ import { computed, reactive } from 'vue';
 import AppraisalPage from './AppraisalPage.vue';
 import ArtworkEntry from './ArtworkEntry.vue';
 import AppraisalSummary from './AppraisalSummary.vue';
+import { useRoute } from 'vue-router';
 
-const appraisal = reactive( await Appraisal.loadAppraisal() )
+const route = useRoute();
+
+const id:string = route.params.id;
+
+const appraisal = reactive( await Appraisal.loadAppraisal(id) )
 
 function lineBreaks(input?:string):string {
   if (!input) { return "" }

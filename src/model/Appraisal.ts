@@ -5,6 +5,7 @@ import * as contentful from 'contentful'
 import { type ContentfulData } from "./types";
 
 import apiConfig from "@/apiConfig";
+import type { App } from "vue";
 
 const client = contentful.createClient({
   ...apiConfig
@@ -82,15 +83,21 @@ export class Appraisal {
     return retString
   }
 
-  static async loadAppraisal(): Promise<Appraisal> {
+  static async loadAllAppraisals(): Promise<Array<Appraisal>> {
     //const appraisalRawData:ContentfulData = await client.getEntry(id);
-
+    
     const appraisalRawData:any = await client.getEntries({
-      include: 10,
+      include: 0,
       content_type: "appraisal"
     })
-
-    return new Appraisal(appraisalRawData.items[0]);
+    
+    return appraisalRawData.items.map((rawAppraisal)=>{
+      return new Appraisal(rawAppraisal)
+    })
   }
 
+  static async loadAppraisal(id:string): Promise<Appraisal> {
+    const appraisalRawData = await client.getEntry(id);
+    return new Appraisal(appraisalRawData);
+  }
 }
