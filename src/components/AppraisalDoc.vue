@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const id:string = route.params.id;
+const id:string = route.params.id as string;
 
 const appraisal = reactive( await Appraisal.loadAppraisal(id) )
 

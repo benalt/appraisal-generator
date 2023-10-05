@@ -91,13 +91,14 @@ export class Appraisal {
       content_type: "appraisal"
     })
     
-    return appraisalRawData.items.map((rawAppraisal)=>{
+    return appraisalRawData.items.map((rawAppraisal:ContentfulData)=>{
       return new Appraisal(rawAppraisal)
     })
   }
 
   static async loadAppraisal(id:string): Promise<Appraisal> {
     const appraisalRawData = await client.getEntry(id);
+    // @ts-ignore
     return new Appraisal(appraisalRawData);
   }
 }
