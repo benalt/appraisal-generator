@@ -12,7 +12,10 @@ const id:string = route.params.id as string;
 
 const appraisal = reactive( await Appraisal.loadAppraisal(id) )
 
-document.getElementById('pageTitle').innerText = appraisal.title;
+const theTitle = document.getElementById('pageTitle');
+if (theTitle){
+  theTitle.innerText = appraisal.title || "";
+}
 
 function lineBreaks(input?:string):string {
   if (!input) { return "" }
