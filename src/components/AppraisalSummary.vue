@@ -9,16 +9,16 @@ defineProps<{
 
 <template>
   <div>
-    <h1 id="appraisal-summary">Appraisal Summary</h1>
+    <h1 id="appraisal-summary">Fine Art Inventory</h1>
     <ol>
       <li class="titleRow">
-        <span class="label">Total Replacement Value:</span>
+        <span class="label">Total Retail Replacement Value:</span>
         <span class="data" v-html="appraisal.appraisedValueHtml"></span>
       </li>
       <li v-for="(appraisedArtwork, idx) in appraisal.appraisedArtworks" :key="`appraisedArtwork-summary${appraisedArtwork.id}`">
         <span class="number">{{ appraisedArtwork.inventoryNumber || (idx + 1) }}</span>
         <span class="label" v-html="appraisedArtwork.labelHtml" />
-        <span class="data">{{ appraisedArtwork.appraisedValue }}</span>
+        <span class="data">{{ appraisedArtwork.appraisedValueRangeHtml }}</span>
       </li>
     </ol>
   </div>
@@ -33,7 +33,7 @@ ol {
 
 ol li {
   display: grid;
-  grid-template-columns: .5in 1fr 2.5in;
+  grid-template-columns: .25in 1fr auto;
   column-gap: .25in;
   padding: .1in 0;
 }

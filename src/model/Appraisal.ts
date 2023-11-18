@@ -6,6 +6,7 @@ import { type ContentfulData } from "./types";
 
 import apiConfig from "@/apiConfig";
 import type { App } from "vue";
+import { usCurrencyFormatter } from '../lib/formatters'
 
 const client = contentful.createClient({
   ...apiConfig
@@ -72,7 +73,7 @@ export class Appraisal {
     if (valueRange[0] === valueRange[1]) {
       retString = `$${valueRange[0].toLocaleString()}.00`
     } else {
-      retString = `$${valueRange[0].toLocaleString()}.00-${valueRange[1].toLocaleString()}.00`
+      retString = `${usCurrencyFormatter.format(valueRange[0])}-${usCurrencyFormatter.format(valueRange[1])}`
     }
 
     if (incomplete) {
@@ -97,7 +98,7 @@ export class Appraisal {
   }
 
   static async loadAppraisal(id:string): Promise<Appraisal> {
-    const appraisalRawData = await client.getEntry(id);
+    const appraisalRawData = await client.getEntry(id,{ include: 10});
     // @ts-ignore
     return new Appraisal(appraisalRawData);
   }

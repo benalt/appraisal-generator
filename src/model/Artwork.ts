@@ -2,6 +2,7 @@ import { Artist } from "./Artist"
 import { RichTextBlock } from "./RichTextBlock"
 import { type ContentfulData } from "./types"
 
+import { usCurrencyFormatter } from '../lib/formatters'
 
 class ImageAsset {
   constructor (contentfulData:ContentfulData) {
@@ -46,13 +47,15 @@ export class Artwork {
             "signature", "style",
             "medium", "dimensions",
             "condition", "frameNote",
+            "edition", "printer", "publisher",
             "appraisedValue" ].includes(key) ) {
         // @ts-ignore
         this[key] = contentfulData.fields[key]
       }
 
       if ( [ "provenance", "exhibited",
-            "literature", "description" ].includes(key) ) {
+            "literature", "description",
+            "footnotes" ].includes(key) ) {
         // @ts-ignore
         this[key] = new RichTextBlock( contentfulData.fields[key] as ContentfulData)
       }        
@@ -82,21 +85,34 @@ export class Artwork {
   public medium?: string
   public dimensions?: string
   public condition?: string
+  public edition?: string
+  public printer?: string
+  public publisher?: string
   public frameNote?:string
   public appraisedValue?: string
   public provenance?: RichTextBlock
   public exhibited?: RichTextBlock
   public literature?: RichTextBlock
   public description?: RichTextBlock
+  public footnotes?: RichTextBlock
   public supportingArtworks: Array<SupportingArtwork> = []
 
   get labelHtml():string {
     let retString = (this.artist?.artistName) ? `${ this.artist.artistName }, `: ''
-    if (this.title) { retString = retString + this.title }
+    if (this.title) { retString = retString + "<i>" + this.title + "</i>" }
     if (this.year) { retString = retString + `, ${this.year}`  }
     return retString
   }
 
+  get appraisedValueRangeHtml():string {
+    if (this.appraisedValueRange) {
+      if (this.appraisedValueRange[0] == this.appraisedValueRange[1]) {
+        return usCurrencyFormatter.format(this.appraisedValueRange[0])
+      }
+      return `${this.appraisedValueRange[0].toFixed()}-${this.appraisedValueRange[1].toFixed()}`
+    }
+    return ""
+  }
   get appraisedValueRange():[number, number]|null {
     if (!this.appraisedValue) { return null }
     const range = [];

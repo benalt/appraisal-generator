@@ -1,6 +1,7 @@
 html {
   font-family: 'Open Sans', sans-serif;
-  font-size: 11pt;
+  font-size: 9.5pt;
+  font-weight: 300;
 }
 
 /*
@@ -55,4 +56,9 @@ hr {
   border: 0;
   margin: 0;
   page-break-before: always;
+}
+
+#app {
+  width: 7in;
+  margin: 0 auto;
 }

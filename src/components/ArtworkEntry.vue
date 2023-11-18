@@ -5,6 +5,7 @@ defineProps<{
   artwork: Artwork,
   position: number
 }>()
+
 </script>
 
 <template>
@@ -13,10 +14,13 @@ defineProps<{
       <span v-if="artwork.inventoryNumber">{{ artwork.inventoryNumber }}</span>
       <span v-else>{{ position }}</span>
     </div>
-    <h2 class="title"><span v-html="artwork.artist?.artistName"></span> <i>{{ artwork.title }}</i>, {{ artwork.year }}</h2>
+    <div class="title">
+      <h2><span v-html="artwork.artist?.artistName"></span> <i>{{ artwork.title }}</i>, {{ artwork.year }}</h2>
+      <span v-if="artwork.appraisedValue" class="appraisalValue">{{ artwork.appraisedValueRangeHtml }}</span>
+    </div>
+    
     <div class="details">
       
-    
       <ul>
         <li v-if="artwork.artist"><b>Artist/Maker:</b> <span v-html="artwork.artist?.labelHtml" /></li>
         <li v-if="artwork.signature"><b>Signature:</b> {{ artwork.signature }}</li>
@@ -25,11 +29,15 @@ defineProps<{
         <li v-if="artwork.dimensions"><b>Dimensions:</b> {{ artwork.dimensions }}</li>
         <li v-if="artwork.condition"><b>Condition:</b> {{ artwork.condition }}</li>
         <li v-if="artwork.frameNote"><b>FrameNote</b> {{ artwork.frameNote }}</li>
-        <li v-if="artwork.appraisedValue"><b>Appraised Value:</b> {{ artwork.appraisedValue }}</li>
+
+        <li v-if="artwork.edition"><b>FrameNote</b> {{ artwork.edition }}</li>
+        <li v-if="artwork.printer"><b>FrameNote</b> {{ artwork.printer }}</li>
+        <li v-if="artwork.publisher"><b>FrameNote</b> {{ artwork.publisher }}</li>
+        
       </ul>
       <div v-if="artwork.provenance">
         <b>Provenance</b>
-        <div v-html="artwork.provenance.html" />
+        <div v-html="artwork.provenance.html" class="noSpace" />
       </div>
     </div>
     <div class="image">
@@ -37,22 +45,27 @@ defineProps<{
     </div>
 
     <div class="textSection">
-      
 
-      <div v-if="artwork.exhibited">
+      <div v-if="artwork.exhibited" class="noSpace">
         <b>Exhibited</b>
         <div v-html="artwork.exhibited.html" />
       </div>
 
-      <div v-if="artwork.literature">
+      <div v-if="artwork.literature" class="noSpace">
         <b>Literature</b>
         <div v-html="artwork.literature.html" />
       </div>
 
-      <div v-if="artwork.description">
+      <div v-if="artwork.description" class="noSpace">
         <b>Description</b>
         <div v-html="artwork.description.html" />
       </div>
+
+      <div v-if="artwork.footnotes" class="footnotes">
+        <b>footnotes</b>
+        <div v-html="artwork.footnotes.html" />
+      </div>
+
     </div>
     <h2 class="subtitle" v-if="artwork.supportingArtworks.length > 0">Supporting Valuations</h2>  
     <div class="supportingArtwork" v-for="(supportingArtwork, idx2) in artwork.supportingArtworks" :key="`suporting-artwork-${supportingArtwork.id}`">  
@@ -76,7 +89,7 @@ defineProps<{
 .appraised-artwork,
 .supportingArtwork {
   display: grid;
-  grid-template-columns: .5in 1fr 2.5in;
+  grid-template-columns: .25in 1fr 2.5in;
   column-gap: 20px;
 }
 
@@ -94,6 +107,18 @@ defineProps<{
   
 }
 
+.title {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-bottom: 2rem;
+  grid-column-end: 2 span;
+}
+
+.appraisalValue {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 .details {
   grid-column-start: 2;
 }
@@ -103,13 +128,25 @@ defineProps<{
   padding: 0;
 }
 
+.noSpace >>> p,
+.noSpace >>> ul,
+.noSpace >>> ol {
+  margin-bottom: .6rem;
+  line-height: 1.2;
+}
+
 .image {
+  text-align: right;
   grid-column-start: 3;
 }
 
 .image img {
   display: inline;
   max-width: 100%;
+}
+
+.footnotes {
+  border-top: 1px solid #333;
 }
 
 .supportingImage {

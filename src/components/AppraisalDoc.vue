@@ -12,6 +12,8 @@ const id:string = route.params.id as string;
 
 const appraisal = reactive( await Appraisal.loadAppraisal(id) )
 
+document.getElementById('pageTitle').innerText = appraisal.title;
+
 function lineBreaks(input?:string):string {
   if (!input) { return "" }
   return input.replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -41,12 +43,13 @@ function lineBreaks(input?:string):string {
         <b>Issue Date of Report:</b> <span v-html="lineBreaks(appraisal.preparationDate.toString())" />
       </div>
     </AppraisalPage>
-    <AppraisalPage>  
+    <!--<AppraisalPage>  
       <h1>Table of Contents</h1>
       <ul>
-        <!--li v-for="item in sections"><a :href="`#${item.id}`">{{ item.title }}</a></li-->
+        <li v-for="item in sections"><a :href="`#${item.id}`">{{ item.title }}</a></li>
       </ul>
     </AppraisalPage>
+    -->
     <AppraisalPage v-for="(precedingPage, idx) in appraisal.precedingSections" :key="`preceding-page-${precedingPage.id}`">  
       <h1 :id="`precedingPage-${idx}`">{{ precedingPage.sectionTitle }}</h1>
       <div v-html="precedingPage.details?.html" />
@@ -56,7 +59,7 @@ function lineBreaks(input?:string):string {
     </AppraisalPage>
     
     <AppraisalPage v-for="(appraisedArtwork, idx) in appraisal.appraisedArtworks" :key="`appraisedArtwork-${appraisedArtwork.id}`" class="appraisedArtworks">
-      <h1 v-if="idx === 0" id="appraised-items">Appraised Items</h1>
+      <h1 v-if="idx === 0" id="appraised-items">Fine Art Inventory</h1>
       <ArtworkEntry :position="idx+1" :artwork="appraisedArtwork"  />
     </AppraisalPage>
     
